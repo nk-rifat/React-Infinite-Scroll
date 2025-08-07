@@ -1,4 +1,5 @@
 import {  useEffect, useRef, useState } from "react";
+import Product from "./Product";
 
 const productsPerPage = 10;
 
@@ -10,6 +11,7 @@ const ProductsList = () => {
   console.log(products)
 
   useEffect(() => {
+    // fetch products
     const fetchProducts = async () => {
       const response = await fetch(`https://dummyjson.com/products?limit=${productsPerPage}&skip=${page * productsPerPage}`
       );
@@ -45,8 +47,11 @@ const ProductsList = () => {
   return (
     <div>
       <h1>Products List</h1>
+      {
+        products.map(product => <Product key={product.id} product={product} />)
+      }
 
-      <div ref={loadedRef}>Loaded More Products...</div>
+      {hasMore && <div ref={loadedRef}>Loaded More Products...</div>}
     </div>
   );
 };
